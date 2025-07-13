@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head><title>CTI Dashboard</title></head>
+<body>
+    <h2>Cyber Threat Intelligence Dashboard</h2>
+    <form id="lookup-form">
+        <input type="text" id="ip" placeholder="Enter IP or Domain">
+        <button type="submit">Lookup</button>
+    </form>
+    <div id="result"></div>
+    <script>
+    document.getElementById('lookup-form').onsubmit = async (e) => {
+        e.preventDefault();
+        const ip = document.getElementById('ip').value;
+        const res = await fetch('/lookup', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ip})
+        });
+        const data = await res.json();
+        document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+    };
+    </script>
+</body>
+</html>
